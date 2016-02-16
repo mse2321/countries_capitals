@@ -1,76 +1,156 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="demo" ng-controller="ctrl">
 <head>
-	<meta charset="UTF-8">
-	<title>Countries &amp; Capitals</title>
-	<style>
+  <meta charset="UTF-8">
+  <title>Countries &amp; Capitals</title>
+  <style>
 body { font-family: "Arial", sans-serif; }
-header { border-bottom: 1px solid #000; text-align: center; padding-bottom: 20px; padding-top: 10px;}
+header { border-bottom: 1px solid #000; text-align: center; padding-bottom: 20px; padding-top: 10px; }
 #heading { font-size: 40px; font-weight: bold; }
 nav ul li { list-style-type: none; }
-.intro_wrap { width: 400; padding-top: 50px; margin: 0 auto; }
-.button_wrap { padding-top: 50px; margin: 0 auto; }
-.list_wrap { padding-top: 30px; }
-.list { width: 500px; }
-footer { margin: 0 auto; position: absolute; bottom: 10px; left: 45%; }
-footer p { text-align: center; }
-	</style>
-  	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-  	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.js"></script>
-	<script>
-		var demo = angular.module('demo', ['ngRoute'])
-		      demo.config(['$routeProvider', function($routeProvider){
-		        $routeProvider.when('/', {
-		          templateUrl: 'home.html',
-		          controller: 'ctrl'
-		        })
-		        .when('/home', {
-		          templateUrl: 'home.html',
-		          controller: 'ctrl'
-		        })
-		        .when('/list', {
-		          templateUrl: 'list.html',
-		          controller: 'ctrl'
-		        })
-		        .when('/detail', {
-		          templateUrl: 'detail.html',
-		          controller: 'ctrl'
-		        })
-		        .otherwise('/error',  {
-		          template: '<p>Error - Page Not Found</p>'
-		        });
-		      }])
-		      /* demo.factory('info', function(){
-		        return {
-		          data: {
-		            tax: 0,
-		            subtotal: 0,
-		            tip_current: 0,
-		            tip_total: 0,
-		            meal_count: 0,
-		            cost_total: 0,
-		            tip_meal_avg: 0
-		          }
-		        }
-		      }) */
+.view_wrap { margin: 0 auto; width: 800px; outline: 1px solid green; }
+.intro_wrap { width: 400px; margin: 0 auto; padding-top: 50px; outline: 1px solid blue; }
+.button_wrap { margin-top: 50px; outline: 1px solid red; text-align: center; }
+.list_wrap { padding-top: 30px; outline: 1px solid #eee; }
+.list { width: 800px; }
+table { width: 100%; outline: 1px solid purple; }
+thead { border-bottom: 2px solid #000; background-color: #eee;}
+td { text-align: center;} 
+tr { height: 30px; }
+footer { margin: 0 auto; position: absolute; bottom: 10px; left: 45%; text-align: center; }
+  </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.js"></script>
+  <script>
+    var demo = angular.module('demo', ['ngRoute'])
+          demo.config(['$routeProvider', function($routeProvider){
+            $routeProvider.when('/', {
+              templateUrl: 'home.html',
+              controller: 'ctrl'
+            })
+            .when('/home', {
+              templateUrl: 'home.html',
+              controller: 'ctrl'
+            })
+            .when('/list', {
+              templateUrl: 'list.html',
+              controller: 'ctrl'
+            })
+            .when('/detail', {
+              templateUrl: 'detail.html',
+              controller: 'ctrl'
+            })
+            .otherwise('/error',  {
+              template: '<p>Error - Page Not Found</p>'
+            });
+          }])
+          /* demo.factory('info', function(){
+            return {
+              data: {
+                tax: 0,
+                subtotal: 0,
+                tip_current: 0,
+                tip_total: 0,
+                meal_count: 0,
+                cost_total: 0,
+                tip_meal_avg: 0
+              }
+            }
+          }) */
 
-	      demo.controller('ctrl', ['$scope', '$route', function($scope, $route){
-	      	//stuff
-	      }]);
-	</script>
+        demo.controller('ctrl', ['$scope', '$route', '$http', function($scope, $route, $http){
+          $scope.ctry_list = [];
+          $scope.flag = '';
+          $scope.map = '';
+          $scope.detail_list = [];
+
+          $scope.search = function() {$http({ method: 'JSONP', url: 'api.geonames.org/' + $scope.param + '&key=AIzaSyBwxYyZRVBuj47LGnSEg3J9tCOhcZtKlAo&callback=JSON_CALLBACK'})
+                  .success(function(data) {
+                    console.log(data);
+                  $scope.param = 'countryInfo?';
+                };
+
+          $scope.lookup = function() {$http({ method: 'JSONP', url: 'api.geonames.org/' + $scope.param + '&key=AIzaSyBwxYyZRVBuj47LGnSEg3J9tCOhcZtKlAo&callback=JSON_CALLBACK'})
+                  .success(function(data) {
+                    console.log(data);
+                  $scope.param = 'countryInfo?';
+          };
+        }]) /// ctrl
+  </script>
 </head>
 <body>
-	<header>
-		<span id="heading">Countries &amp; Capitals</span>
-	</header>
-	<section>
-		<div ng-view class="view_wrap"></div>
-	</section>
-	<footer>
-		<p>&copy;2016 ME Innovation</p>
-	</footer>
-	<script type="text/ng-template" id="home.html"></script>
-	<script type="text/ng-template" id="list.html"></script>
-	<script type="text/ng-template" id="detail.html"></script>
+  <header>
+    <span id="heading">Countries &amp; Capitals</span>
+  </header>
+  <!--<nav>
+      <a href="#/home"><li>Home</li></a>
+      <a href="#/list"><li>List</li></a>
+      <a href="#/detail"><li>Detail</li></a>
+  </nav>-->
+  <section>
+    <div ng-view class="view_wrap"></div>
+
+    <script type="text/ng-template" id="home.html">
+    <div class="intro_wrap">
+      <p class="intro">Welcome to the Countries &amp; Capitals App! Here you can learn more about each one and pull data from geonames.com. Click the button below to get started.</p>
+      <div class="button_wrap">
+        <a href="#/list"><button ng-click="search()">Browse Countries</button></a>
+      </div>
+    </div>
+    </script>
+    <script type="text/ng-template" id="list.html">
+      <div class="list_wrap">
+        <div class="list">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Country Code</th>
+                <th>Capital</th>
+                <th>Area in km<sup>2</sup></th>
+                <th>Population</th>
+                <th>Continent</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="item in ctry_list">
+                <td>{{ demo }}</td>
+                <td>{{ demo }}</td>
+                <td>{{ demo }}</td>
+                <td>{{ demo }}</td>
+                <td>{{ demo }}</td>
+                <td>{{ demo }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="button_wrap">
+          <a href="#/home"><button>Home</button></a>
+        </div>
+      </div>
+    </script>
+    <script type="text/ng-template" id="detail.html">
+      <div class="detail_wrap">
+        <div class="data_wrap">
+          <div class="info_wrap">
+          </div>
+          <div class="image_wrap">
+            <div class="country_wrap">
+            </div>
+            <div class="flag_wrap">
+            </div>
+          </div>
+        </div>
+        <div class="button_wrap">
+          <a href="#/home"><button>Home</button></a>
+          <a href="#/list"><button>Broswe Countries</button></a>
+        </div>
+      </div>
+    </script>
+  </section>
+
+  <footer>
+    <p>&copy;2016 ME Innovation</p>
+  </footer>
 </body>
 </html>
