@@ -8,10 +8,12 @@ body { font-family: "Arial", sans-serif; }
 header { border-bottom: 1px solid #000; text-align: center; padding-bottom: 20px; padding-top: 10px;}
 #heading { font-size: 40px; font-weight: bold; }
 nav ul li { list-style-type: none; }
-.intro_wrap { width: 400; padding-top: 50px; margin: 0 auto;}
-.button_wrap { padding-top: 50px; }
+.intro_wrap { width: 400; padding-top: 50px; margin: 0 auto; }
+.button_wrap { padding-top: 50px; margin: 0 auto; }
 .list_wrap { padding-top: 30px; }
 .list { width: 500px; }
+footer { margin: 0 auto; position: absolute; bottom: 10px; left: 45%; }
+footer p { text-align: center; }
 	</style>
   	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
   	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.js"></script>
@@ -61,15 +63,6 @@ nav ul li { list-style-type: none; }
 	<header>
 		<span id="heading">Countries &amp; Capitals</span>
 	</header>
-	<aside>
-		<nav>
-			<ul>
-				<a href="#/home"><li>Home</li></a>
-				<a href="#/list"><li>List</li></a>
-				<a href="#/detail"><li>Detail</li></a>
-			</ul>
-		</nav>
-	</aside>
 	<section>
 		<div class="view_wrap" ng-view></div>
 	</section>
