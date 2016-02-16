@@ -56,7 +56,7 @@ footer p { text-align: center; }
 
 	      demo.controller('ctrl', ['$scope', '$route', function($scope, $route){
 	      	//stuff
-	      }])
+	      }]);
 	</script>
 </head>
 <body>
@@ -64,7 +64,7 @@ footer p { text-align: center; }
 		<span id="heading">Countries &amp; Capitals</span>
 	</header>
 	<section>
-		<div class="view_wrap" ng-view></div>
+		<div ng-view class="view_wrap"></div>
 	</section>
 	<footer>
 		<p>&copy;2016 ME Innovation</p>
