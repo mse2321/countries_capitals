@@ -11,8 +11,8 @@ nav ul li { list-style-type: none; }
 .view_wrap { margin: 0 auto; width: 800px; outline: 1px solid green; }
 .intro_wrap { width: 400px; margin: 0 auto; padding-top: 50px; outline: 1px solid blue; }
 .button_wrap { margin-top: 50px; outline: 1px solid red; text-align: center; }
-.list_wrap { padding-top: 30px; outline: 1px solid #eee; }
-.list { width: 800px; }
+.cnty_wrap { padding-top: 30px; outline: 1px solid #eee; }
+.cnty { width: 800px; }
 table { width: 100%; outline: 1px solid purple; }
 thead { border-bottom: 2px solid #000; background-color: #eee;}
 td { text-align: center;} 
@@ -33,7 +33,7 @@ footer { margin: 0 auto; position: absolute; bottom: 10px; left: 45%; text-align
               controller: 'ctrl'
             })
             .when('/list', {
-              templateUrl: 'list.html',
+              templateUrl: 'countries.html',
               controller: 'ctrl'
             })
             .when('/detail', {
@@ -64,16 +64,24 @@ footer { margin: 0 auto; position: absolute; bottom: 10px; left: 45%; text-align
           $scope.map = '';
           $scope.detail_list = [];
 
-          $scope.search = function() {$http({ method: 'JSONP', url: 'api.geonames.org/' + $scope.param + '&key=AIzaSyBwxYyZRVBuj47LGnSEg3J9tCOhcZtKlAo&callback=JSON_CALLBACK'})
-                  .success(function(data) {
-                    console.log(data);
-                  $scope.param = 'countryInfo?';
-                };
+          $scope.search = function() {$http({ method: 'JSONP', url: 'api.geonames.org/countryInfo?username=mse233@gmail.com&key=AIzaSyBwxYyZRVBuj47LGnSEg3J9tCOhcZtKlAo&callback=JSON_CALLBACK'})
+            .success(function(data) {
+              console.log(data);
+              //$scope.param = 'countryInfo?username=mse233@gmail.com&maxRows=10';
+            });
+          };
 
           $scope.lookup = function() {$http({ method: 'JSONP', url: 'api.geonames.org/' + $scope.param + '&key=AIzaSyBwxYyZRVBuj47LGnSEg3J9tCOhcZtKlAo&callback=JSON_CALLBACK'})
-                  .success(function(data) {
-                    console.log(data);
-                  $scope.param = 'countryInfo?';
+            .success(function(data) {
+              console.log(data);
+              $scope.param = 'search?q=something&username=mse233@gmail.com&maxRows=10';
+            });
+          };
+          $scope.neighbors = function() {$http({ method: 'JSONP', url: 'api.geonames.org/' + $scope.param + '&key=AIzaSyBwxYyZRVBuj47LGnSEg3J9tCOhcZtKlAo&callback=JSON_CALLBACK'})
+            .success(function(data) {
+              console.log(data);
+              $scope.param = 'neighbours?q=something&username=mse233@gmail.com&maxRows=10';
+            });
           };
         }]) /// ctrl
   </script>
@@ -98,9 +106,9 @@ footer { margin: 0 auto; position: absolute; bottom: 10px; left: 45%; text-align
       </div>
     </div>
     </script>
-    <script type="text/ng-template" id="list.html">
-      <div class="list_wrap">
-        <div class="list">
+    <script type="text/ng-template" id="countries.html">
+      <div class="cnty_wrap">
+        <div class="cnty">
           <table>
             <thead>
               <tr>
@@ -114,12 +122,12 @@ footer { margin: 0 auto; position: absolute; bottom: 10px; left: 45%; text-align
             </thead>
             <tbody>
               <tr ng-repeat="item in ctry_list">
-                <td>{{ demo }}</td>
-                <td>{{ demo }}</td>
-                <td>{{ demo }}</td>
-                <td>{{ demo }}</td>
-                <td>{{ demo }}</td>
-                <td>{{ demo }}</td>
+                <td>{{ demo.countryName }}</td>
+                <td>{{ demo.countryCode }}</td>
+                <td>{{ demo.capital }}</td>
+                <td>{{ demo.areaInSqKm }}</td>
+                <td>{{ demo.population }}</td>
+                <td>{{ demo.continent }}</td>
               </tr>
             </tbody>
           </table>
@@ -132,12 +140,36 @@ footer { margin: 0 auto; position: absolute; bottom: 10px; left: 45%; text-align
     <script type="text/ng-template" id="detail.html">
       <div class="detail_wrap">
         <div class="data_wrap">
+          <h1>{{ demo.countryName }}</h1>
           <div class="info_wrap">
+            <table>
+              <tbody>
+                <tr>
+                  <td>Population of Country: </td><td>{{ demo.countryName }}</td>
+                </tr>
+                <tr>
+                  <td>Area: </td><td>{{ demo.countryName }}</td>
+                </tr>
+                <tr>
+                  <td>Capital: </td><td>{{ demo.countryName }}</td>
+                </tr>
+                <tr>
+                  <td>Population of Capital: </td><td>{{ demo.countryName }}</td>
+                </tr>
+                <tr>
+                  <td>3 neighbors: </td><td>{{ demo.geoname.countryName }}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <div class="image_wrap">
             <div class="country_wrap">
+              <img src="http://www.geonames.org/img/country/250/{{ demo.countryCode }}.png" alt="" />
+              <img src="{{ demo.PLACEHOLDER_PIC_URL }}" alt="" />
             </div>
             <div class="flag_wrap">
+              <img src="http://www.geonames.org/flags/x/{{ demo.countryCode }}.gif" alt="" />
+              <img src="{{ demo.PLACEHOLDER_PIC_URL }}" alt="" />
             </div>
           </div>
         </div>
