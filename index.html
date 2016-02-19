@@ -41,7 +41,7 @@ demo.config(['$routeProvider', function($routeProvider){
               templateUrl: 'countries.html',
               controller: 'ctrl'
             })
-            .when('/detail', {
+            .when('/:countryCode/capital', {
               templateUrl: 'detail.html',
               controller: 'ctrl'
             })
@@ -61,20 +61,17 @@ demo.factory('list', function($http){
             };
 }); // end of list
 
-/* demo.factory('search', function($http){
+demo.factory('search', function($http){
             return function(countryCode){
               return $http ({ 
                 cache: true,
                 method: 'JSONP', 
-                url: 'http://api.geonames.org/countryInfoJSON?username=mse2335',
-                params: {
+                url: 'http://api.geonames.org/countryInfoJSON?country=FR&username=mse2335&callback=JSON_CALLBACK',
+                /* params: {
                   callback: 'JSON_CALLBACK', 
                   country: countryCode,
-                  q: city,
-                  name_equals: city,
-                  isNameRequired: true,
                   maxRows: 1
-                }
+                } */
               })
             };
 }); // end of search
@@ -84,17 +81,16 @@ demo.factory('neighbors', function($http){
               return $http ({ 
                 cache: true,
                 method: 'JSONP', 
-                url: 'http://api.geonames.org/neighboursJSON?country=' + countryCode + '&username=mse2335',
+                //url: 'http://api.geonames.org/neighboursJSON?country=' + countryCode + '&username=mse2335',
+                url: 'http://api.geonames.org/neighboursJSON?country=FR&username=mse2335',
                 params: {callback: 'JSON_CALLBACK'}
               })
             };
 }); // end of search
 
-*/
-
 // end of factories
 
-demo.controller('ctrl', ['$scope', '$route', '$http', 'list', function($scope, $route, $http, list){
+demo.controller('ctrl', ['$scope', '$route', '$http', 'list', 'search', 'neighbors', function($scope, $route, $http, list, search, neighbors){
           $scope.country_list = [];
           $scope.flag = '';
           $scope.map = '';
@@ -109,7 +105,7 @@ demo.controller('ctrl', ['$scope', '$route', '$http', 'list', function($scope, $
               console.log('Error!')
         }); //  end of list function
 
-/*        search().success(function(data) {
+        search().success(function(data) {
               console.log(data);
               $scope.country_list = data['geonames'];
               console.log($scope.country_list);
@@ -126,7 +122,6 @@ demo.controller('ctrl', ['$scope', '$route', '$http', 'list', function($scope, $
             .error(function(data) {
               console.log('Error!')
         }); // end of neighbors function
-*/
 
 }]) /// ctrl
   </script>
@@ -167,8 +162,8 @@ demo.controller('ctrl', ['$scope', '$route', '$http', 'list', function($scope, $
             </thead>
             <tbody>
               
-                <tr ng-repeat="item in country_list">
-                  <td><a href="#/detail">{{ item.countryName }}</a></td>
+                <tr ng-repeat="item in country_list" >
+                  <td><a href="#/:countryCode/capital">{{ item.countryName }}</a></td>
                   <td>{{ item.countryCode }}</td>
                   <td>{{ item.capital }}</td>
                   <td>{{ item.areaInSqKm }}</td>
