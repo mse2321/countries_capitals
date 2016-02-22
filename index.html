@@ -50,6 +50,8 @@ demo.config(['$routeProvider', function($routeProvider){
             });
 }]) // end of promises and routes
 
+
+// gets country listing
 demo.factory('list', function($http){
             return function(){
               return $http ({ 
@@ -61,28 +63,26 @@ demo.factory('list', function($http){
             };
 }); // end of list
 
+// gets capital population
 demo.factory('search', function($http){
             return function(countryCode){
               return $http ({ 
-                cache: true,
                 method: 'JSONP', 
-                url: 'http://api.geonames.org/countryInfoJSON?country=FR&username=mse2335&callback=JSON_CALLBACK',
-                /* params: {
+                url: 'http://api.geonames.org/countryInfoJSON?&username=mse2335',
+                params: {
                   callback: 'JSON_CALLBACK', 
                   country: countryCode,
-                  maxRows: 1
-                } */
+                }
               })
             };
 }); // end of search
 
+// gets neighbors to countries
 demo.factory('neighbors', function($http){
             return function(countryCode){
               return $http ({ 
-                cache: true,
                 method: 'JSONP', 
-                //url: 'http://api.geonames.org/neighboursJSON?country=' + countryCode + '&username=mse2335',
-                url: 'http://api.geonames.org/neighboursJSON?country=FR&username=mse2335',
+                url: 'http://api.geonames.org/neighboursJSON?country=' + countryCode + '&username=mse2335',
                 params: {callback: 'JSON_CALLBACK'}
               })
             };
@@ -92,10 +92,8 @@ demo.factory('neighbors', function($http){
 
 demo.controller('ctrl', ['$scope', '$route', '$http', 'list', 'search', 'neighbors', function($scope, $route, $http, list, search, neighbors){
           $scope.country_list = [];
-          $scope.flag = '';
-          $scope.map = '';
-          $scope.detail_list = [];
-
+          $scope.countryCode = '';
+      
         list().success(function(data) {
               console.log(data);
               $scope.country_list = data['geonames'];
@@ -105,18 +103,22 @@ demo.controller('ctrl', ['$scope', '$route', '$http', 'list', 'search', 'neighbo
               console.log('Error!')
         }); //  end of list function
 
-        search().success(function(data) {
+        search($scope.countryCode).success(function(data) {
               console.log(data);
+              $scope.countryCode = $route.current.params.countryCode;
               $scope.country_list = data['geonames'];
+
+              console.log($scope.countryCode);
               console.log($scope.country_list);
             })
             .error(function(data) {
               console.log('Error!')
         }); // end of search function
 
-        neighbors().success(function(data) {
+        neighbors($scope.countryCode).success(function(data) {
               console.log(data);
-              $scope.country_list = data['geonames'];
+              $scope.countryCode = $route.current.params.countryCode;
+              $scope.neighbours_list = data.geonames;
               console.log($scope.country_list);
             })
             .error(function(data) {
@@ -180,7 +182,7 @@ demo.controller('ctrl', ['$scope', '$route', '$http', 'list', 'search', 'neighbo
     </script>
     <script type="text/ng-template" id="detail.html">
       <div class="detail_wrap" >
-        <div class="data_wrap" ng-repeat="item in country_list | limitTo: 1">
+        <div class="data_wrap" >
           <div class="info_wrap">
           <h1>{{ item.countryName }}</h1>
             <table class="intro_wrap_table">
@@ -198,7 +200,7 @@ demo.controller('ctrl', ['$scope', '$route', '$http', 'list', 'search', 'neighbo
                   <td>Population of Capital: </td><td>{{ item.population }}</td>
                 </tr>
                 <tr>
-                  <td>3 neighbors: </td><td>{{ item.neighbours }}</td>
+                  <td>3 neighbors: </td><td ng-repeat="item in neighbours_list">{{ item.neighbours }}</td>
                 </tr>
               </tbody>
             </table>
