@@ -23,7 +23,7 @@ thead { border-bottom: 2px solid #000; background-color: #eee; }
 td { text-align: center; } 
 tr { height: 30px; }
 tbody tr:hover { background-color: #ccc; color: white; cursor: pointer; }
-footer { margin: 0 auto; position: absolute; bottom: 0px; left: 46.5%; text-align: center; }
+footer { margin: 0 auto; position: absolute; bottom: -60px; left: 46.5%; text-align: center; }
   </style>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.js"></script>
@@ -206,11 +206,10 @@ demo.controller('ctrl_detail', ['$scope', '$location', 'search', 'neighbors', fu
       <div class="detail_wrap" >
         <div class="data_wrap" >
           <div class="info_wrap">
-          <h1>{{ countryName }}</h1>
+          <h1>{{ country_data.countryName }}</h1>
             <table class="intro_wrap_table">
               <tbody>
                 <tr>
-                <div>{{ country_data.countryName }}</div>
                   <td>Population of Country: </td><td>{{ country_data.countryName }}</td>
                 </tr>
                 <tr>
