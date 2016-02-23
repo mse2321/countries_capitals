@@ -8,21 +8,22 @@ body { font-family: "Arial", sans-serif; }
 header { border-bottom: 1px solid #000; text-align: center; padding-bottom: 20px; padding-top: 10px; }
 #heading { font-size: 40px; font-weight: bold; }
 nav ul li { list-style-type: none; }
+.page_wrap {position: relative; height: 100%; }
 .view_wrap { margin: 0 auto; width: 800px; }
 .intro_wrap { width: 400px; margin: 0 auto; padding-top: 50px; }
 .button_wrap { margin-top: 50px; text-align: center; }
 .country_wrap { padding-top: 30px; }
 .data_wrap { margin-bottom: 40px; }
 .country { width: 800px; }
-#flag { width: 70%;}
+#flag { width: 70%; }
 .image_wrap { width: 100%; }
-.map_wrap, .flag_wrap { width: 40%; display: inline-block;}
+.map_wrap, .flag_wrap { width: 40%; display: inline-block; }
 table { width: 100%; border-collapse: collapse; }
 thead { border-bottom: 2px solid #000; background-color: #eee; }
 td { text-align: center; } 
 tr { height: 30px; }
 tbody tr:hover { background-color: #ccc; color: white; cursor: pointer; }
-footer { margin: 0 auto; position: absolute; bottom: 10px; left: 45%; text-align: center; }
+footer { margin: 0 auto; position: absolute; bottom: 0px; left: 46.5%; text-align: center; }
   </style>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.js"></script>
@@ -43,12 +44,12 @@ demo.config(['$routeProvider', function($routeProvider){
             })
             .when('/:countryCode/capital', {
               templateUrl: 'detail.html',
-              controller: 'ctrl'
+              controller: 'ctrl_detail'
             })
             .otherwise('/error',  {
               template: '<p>Error - Page Not Found</p>'
             });
-}]) // end of promises and routes
+}]); // end of promises and routes
 
 
 // gets country listing
@@ -79,10 +80,10 @@ demo.factory('search', function($http){
 
 // gets neighbors to countries
 demo.factory('neighbors', function($http){
-            return function(countryCode){
+            return function(codeResult){
               return $http ({ 
                 method: 'JSONP', 
-                url: 'http://api.geonames.org/neighboursJSON?country=' + countryCode + '&username=mse2335',
+                url: 'http://api.geonames.org/neighboursJSON?country=' + codeResult + '&username=mse2335',
                 params: {callback: 'JSON_CALLBACK'}
               })
             };
@@ -90,45 +91,65 @@ demo.factory('neighbors', function($http){
 
 // end of factories
 
-demo.controller('ctrl', ['$scope', '$route', '$http', 'list', 'search', 'neighbors', function($scope, $route, $http, list, search, neighbors){
+demo.controller('ctrl', ['$scope', 'list', function($scope, list){
           $scope.country_list = [];
-          $scope.countryCode = '';
-      
+
+        /* page_address = self.request.uri
+        path_layer = urlparse(page_address)[2].split('/')[1]
+        base = os.path.basename(page_address)
+
+        $scope.countryCode = $route.current.params.countryCode;
+        */
+
         list().success(function(data) {
-              console.log(data);
+              //console.log(data);
               $scope.country_list = data['geonames'];
-              console.log($scope.country_list);
+              //console.log($scope.country_list);
             })
             .error(function(data) {
               console.log('Error!')
         }); //  end of list function
 
-        search($scope.countryCode).success(function(data) {
-              console.log(data);
-              $scope.countryCode = $route.current.params.countryCode;
-              $scope.country_list = data['geonames'];
+}]); /// ctrl
+demo.controller('ctrl_detail', ['$scope', '$location', 'search', 'neighbors', function($scope, $location, search, neighbors){
+          $scope.country_list = [];
+          $scope.countryCode =  $location.path();
+          $scope.codeResult = $scope.countryCode.split('/')[1];
 
-              console.log($scope.countryCode);
-              console.log($scope.country_list);
+        /* page_address = self.request.uri
+        path_layer = urlparse(page_address)[2].split('/')[1]
+        base = os.path.basename(page_address)
+
+        $scope.countryCode = $route.current.params.countryCode;
+        */
+
+        search($scope.codeResult).success(function(data) {
+              console.log(data);
+              $scope.country_data = data['geonames'][0];
+              console.log('country_data:' + $scope.country_data);
+              console.log('codeResult:' + $scope.codeResult);
+
+              //console.log($scope.countryCode);
+              //console.log($scope.country_list);
             })
             .error(function(data) {
               console.log('Error!')
         }); // end of search function
 
-        neighbors($scope.countryCode).success(function(data) {
-              console.log(data);
-              $scope.countryCode = $route.current.params.countryCode;
+        neighbors($scope.codeResult).success(function(data) {
+              //console.log(data);
               $scope.neighbours_list = data.geonames;
-              console.log($scope.country_list);
+              console.log($scope.neighbours_list);
             })
             .error(function(data) {
               console.log('Error!')
         }); // end of neighbors function
 
-}]) /// ctrl
+}]); /// ctrl
   </script>
 </head>
 <body>
+  <div class="page_wrap">
   <header>
     <span id="heading">Countries &amp; Capitals</span>
   </header>
@@ -162,10 +183,11 @@ demo.controller('ctrl', ['$scope', '$route', '$http', 'list', 'search', 'neighbo
                 <th>Continent</th>
               </tr>
             </thead>
+            <div>{{ country_data.countryName }}</div>
             <tbody>
               
                 <tr ng-repeat="item in country_list" >
-                  <td><a href="#/:countryCode/capital">{{ item.countryName }}</a></td>
+                  <td><a href="#/{{ item.countryCode }}/capital">{{ item.countryName }}</a></td>
                   <td>{{ item.countryCode }}</td>
                   <td>{{ item.capital }}</td>
                   <td>{{ item.areaInSqKm }}</td>
@@ -184,32 +206,33 @@ demo.controller('ctrl', ['$scope', '$route', '$http', 'list', 'search', 'neighbo
       <div class="detail_wrap" >
         <div class="data_wrap" >
           <div class="info_wrap">
-          <h1>{{ item.countryName }}</h1>
+          <h1>{{ countryName }}</h1>
             <table class="intro_wrap_table">
               <tbody>
                 <tr>
-                  <td>Population of Country: </td><td>{{ item.countryName }}</td>
+                <div>{{ country_data.countryName }}</div>
+                  <td>Population of Country: </td><td>{{ country_data.countryName }}</td>
                 </tr>
                 <tr>
-                  <td>Area: </td><td>{{ item.areaInSqKm }}km</td>
+                  <td>Area: </td><td>{{ country_data.areaInSqKm }}km</td>
                 </tr>
                 <tr>
-                  <td>Capital: </td><td>{{ item.capital }}</td>
+                  <td>Capital: </td><td>{{ country_data.capital }}</td>
                 </tr>
                 <tr>
-                  <td>Population of Capital: </td><td>{{ item.population }}</td>
+                  <td>Population of Capital: </td><td>{{ country_data.population }}</td>
                 </tr>
                 <tr>
-                  <td>3 neighbors: </td><td ng-repeat="item in neighbours_list">{{ item.neighbours }}</td>
+                  <td>3 neighbors: </td><td ng-repeat="item in neighbours_list">{{ item.name }}</td>
                 </tr>
               </tbody>
             </table>
             <div class="image_wrap">
               <div class="country_wrap map_wrap">
-                <img src="http://www.geonames.org/img/country/250/{{ item.countryCode }}.png" alt="" />
+                <img src="http://www.geonames.org/img/country/250/{{ country_data.countryCode }}.png" alt="" />
               </div>
               <div class="flag_wrap">
-                <img id='flag' src="http://www.geonames.org/flags/x/{{ item.countryCode | lowercase }}.gif" alt="" />
+                <img id='flag' src="http://www.geonames.org/flags/x/{{ country_data.countryCode | lowercase }}.gif" alt="" />
               </div>
             </div>
           </div>
@@ -225,5 +248,6 @@ demo.controller('ctrl', ['$scope', '$route', '$http', 'list', 'search', 'neighbo
   <footer>
     <p>&copy;2016 ME Innovation</p>
   </footer>
+  </div> <!-- end of page wrap -->
 </body>
 </html>
