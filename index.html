@@ -2,11 +2,14 @@
 <html lang="en" ng-app="demo" ng-controller="ctrl">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=yes">
   <title>Countries &amp; Capitals</title>
+  <link href='https://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
   <style>
-body { font-family: "Arial", sans-serif; }
-header { border-bottom: 1px solid #000; text-align: center; padding-bottom: 20px; padding-top: 10px; }
-#heading { font-size: 40px; font-weight: bold; }
+body { font-family: "Arial", sans-serif; background: url(files/world_map_fotolia.jpg) no-repeat center center fixed; background-size: cover; color: #3E2723; font-family: 'Vollkorn', serif; text-align: center; }
+header { border-bottom: 5px solid #3E2723; text-align: center; padding-bottom: 20px; padding-top: 10px; }
+#heading { font-size: 60px; font-weight: bold; }
 nav ul li { list-style-type: none; }
 .page_wrap {position: relative; height: 100%; }
 .view_wrap { margin: 0 auto; width: 800px; }
@@ -17,6 +20,7 @@ nav ul li { list-style-type: none; }
 .country { width: 800px; }
 #flag { width: 70%; }
 .image_wrap { width: 100%; }
+.info_headings { margin-top: 10px; font-weight: bold; font-size: 20px; }
 .map_wrap, .flag_wrap { width: 40%; display: inline-block; }
 .view-animation.ng-enter,.animate-view.ng-leave { transition:1s linear all; }
 .view-animation.ng-enter { opacity:0; }
@@ -24,11 +28,23 @@ nav ul li { list-style-type: none; }
 .view-animation.ng-leave { opacity:1; }
 .view-animation.ng-leave.ng-leave-active { opacity:0; }
 table { width: 100%; border-collapse: collapse; }
-thead { border-bottom: 2px solid #000; background-color: #eee; }
-td { text-align: center; } 
+h1 { font-size: 40px; }
+a { color: #546E7A; text-decoration: none; font-weight: bold; }
+button { background-color: #A1887F; color: #3E2723; padding: 10px; border: none; font-weight: bold; font-family: 'Vollkorn', serif; cursor: pointer; }
+button:hover { background-color: #3E2723; color: #A1887F; }
+thead { border-bottom: 2px solid #000; background-color: #3E2723; color: #FFF3E0; font-weight: normal; }
 tr { height: 30px; }
-tbody tr:hover { background-color: #ccc; color: white; cursor: pointer; }
-footer { margin: 0 auto; position: absolute; bottom: -60px; left: 46.5%; text-align: center; }
+tbody tr:hover { background-color: #A1887F; color: white; cursor: pointer; }
+
+@media screen and (max-width: 799px) {
+  #heading { font-size: 40px; font-weight: bold; }
+  .view_wrap, .intro_wrap, .country, .detail_wrap { width: 100%; }
+  .map_wrap, .flag_wrap { width: 100%; display: inline-block; }
+  .hide { display: none; }
+  .long_entry { padding: 10px; }
+  
+}
+
   </style>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.js"></script>
@@ -193,10 +209,10 @@ demo.controller('ctrl_detail', ['$scope', '$location', 'search', 'neighbors', fu
               <tr>
                 <th>Name</th>
                 <th>Country Code</th>
-                <th>Capital</th>
-                <th>Area in km<sup>2</sup></th>
-                <th>Population</th>
-                <th>Continent</th>
+                <th class="hide">Capital</th>
+                <th class="hide">Area in km<sup>2</sup></th>
+                <th class="hide">Population</th>
+                <th class="hide">Continent</th>
               </tr>
             </thead>
             <div>{{ country_data.countryName }}</div>
@@ -205,10 +221,10 @@ demo.controller('ctrl_detail', ['$scope', '$location', 'search', 'neighbors', fu
                 <tr ng-repeat="item in country_list" >
                   <td><a href="#/{{ item.countryCode }}/capital">{{ item.countryName }}</a></td>
                   <td>{{ item.countryCode }}</td>
-                  <td>{{ item.capital }}</td>
-                  <td>{{ item.areaInSqKm }}</td>
-                  <td>{{ item.population }}</td>
-                  <td>{{ item.continent }}</td>
+                  <td class="hide">{{ item.capital }}</td>
+                  <td class="hide">{{ item.areaInSqKm }}</td>
+                  <td class="hide">{{ item.population }}</td>
+                  <td class="hide">{{ item.continent }}</td>
                 </tr>
             </tbody>
           </table>
@@ -223,25 +239,29 @@ demo.controller('ctrl_detail', ['$scope', '$location', 'search', 'neighbors', fu
         <div class="data_wrap" >
           <div class="info_wrap">
           <h1>{{ country_data.countryName }}</h1>
-            <table class="intro_wrap_table">
-              <tbody>
-                <tr>
-                  <td>Population of Country: </td><td>{{ country_data.countryName }}</td>
-                </tr>
-                <tr>
-                  <td>Area: </td><td>{{ country_data.areaInSqKm }}km</td>
-                </tr>
-                <tr>
-                  <td>Capital: </td><td>{{ country_data.capital }}</td>
-                </tr>
-                <tr>
-                  <td>Population of Capital: </td><td>{{ country_data.population }}</td>
-                </tr>
-                <tr>
-                  <td>3 neighbors: </td><td ng-repeat="item in neighbours_list">{{ item.name }}</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="intro_wrap_table">
+                  <div class="info_headings">
+                      <strong>Population of Country:</strong>
+                  </div>
+                  <div>{{ country_data.countryName }}</div>
+                  <div class="info_headings">
+                    <strong>Area:</strong> 
+                  </div>
+                  <div>{{ country_data.areaInSqKm }}km</div>
+                  <div class="info_headings">
+                    <strong>Capital:</strong>
+                  </div>
+                  <div>{{ country_data.capital }}</div>
+                  <div class="info_headings">
+                    <strong>Population of Capital:</strong>
+                  </div>
+                  <div>{{ country_data.population }}</div>
+                  <div class="info_headings">
+                    <strong>3 neighbors:</strong>
+                  </div>
+                  <div ng-repeat="item in neighbours_list">{{ item.name }}</div>
+            </div>
+
             <div class="image_wrap">
               <div class="country_wrap map_wrap">
                 <img src="http://www.geonames.org/img/country/250/{{ country_data.countryCode }}.png" alt="" />
@@ -259,10 +279,6 @@ demo.controller('ctrl_detail', ['$scope', '$location', 'search', 'neighbors', fu
       </div>
     </script>
   </section>
-
-  <footer>
-    <p>&copy;2016 ME Innovation</p>
-  </footer>
   </div> <!-- end of page wrap -->
 </body>
 </html>
