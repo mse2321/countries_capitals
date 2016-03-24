@@ -137,7 +137,19 @@ demo.controller('ctrl', ['$scope', 'list', '$timeout', '$q', function($scope, li
 
         list().success(function(data) {
               //console.log(data);
+             // $scope.notAvailable = 'N/A';
+
               $scope.country_list = data['geonames'];
+
+              /* if($scope.resultNumber === 0) {
+                  $scope.notApplicable = true;
+              } else {
+                  $scope.neighbours_list = data['geonames'];
+              } 
+              '' - look for this
+
+              */
+
               //console.log($scope.country_list);
               return showTable();
             })
