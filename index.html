@@ -170,8 +170,18 @@ demo.controller('ctrl_detail', ['$scope', '$location', 'search', 'neighbors', fu
 
         neighbors($scope.codeResult).success(function(data) {
               //console.log(data);
-              $scope.neighbours_list = data.geonames;
-              console.log($scope.neighbours_list);
+
+              $scope.notApplicable = {
+                name: 'Not Applicable'
+              };
+
+              if(data.geonames === null) {
+                $scope.neighbours_list = $scope.notApplicable;
+              } else {
+                $scope.neighbours_list = data.geonames;
+              }
+
+              console.log('n-list: ' + $scope.neighbours_list);
             })
             .error(function(data) {
               console.log('Error!')
