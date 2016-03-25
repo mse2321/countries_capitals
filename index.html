@@ -136,21 +136,9 @@ demo.controller('ctrl', ['$scope', 'list', '$timeout', '$q', function($scope, li
         };
 
         list().success(function(data) {
-              //console.log(data);
-             // $scope.notAvailable = 'N/A';
 
               $scope.country_list = data['geonames'];
 
-              /* if($scope.resultNumber === 0) {
-                  $scope.notApplicable = true;
-              } else {
-                  $scope.neighbours_list = data['geonames'];
-              } 
-              '' - look for this
-
-              */
-
-              //console.log($scope.country_list);
               return showTable();
             })
             .error(function(data) {
@@ -162,13 +150,6 @@ demo.controller('ctrl_detail', ['$scope', '$location', 'search', 'neighbors', fu
           $scope.country_list = [];
           $scope.countryCode =  $location.path();
           $scope.codeResult = $scope.countryCode.split('/')[1];
-
-        /* page_address = self.request.uri
-        path_layer = urlparse(page_address)[2].split('/')[1]
-        base = os.path.basename(page_address)
-
-        $scope.countryCode = $route.current.params.countryCode;
-        */
 
         search($scope.codeResult).success(function(data) {
               console.log(data);
@@ -210,11 +191,6 @@ demo.controller('ctrl_detail', ['$scope', '$location', 'search', 'neighbors', fu
     <header>
       <span id="heading">Countries &amp; Capitals</span>
     </header>
-    <!--<nav>
-        <a href="#/home"><li>Home</li></a>
-        <a href="#/list"><li>List</li></a>
-        <a href="#/detail"><li>Detail</li></a>
-    </nav>-->
     <section>
       <div ng-view class="view_wrap view-animation"></div>
 
