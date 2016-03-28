@@ -11,7 +11,7 @@ body { font-family: "Arial", sans-serif; background: url(files/world_map_fotolia
 header { border-bottom: 5px solid #3E2723; text-align: center; padding-bottom: 20px; padding-top: 10px; }
 #heading { font-size: 60px; font-weight: bold; }
 nav ul li { list-style-type: none; }
-.page_wrap {min-height: 100%; position: fixed; top: 0; bottom: 0; right: 0; left: 0; }
+.page_wrap {min-height: 100%; position: absolute; top: 0; bottom: 0; right: 0; left: 0; }
 .view_wrap { margin: 0 auto; width: 800px; }
 .intro_wrap { width: 400px; margin: 0 auto; padding-top: 50px; }
 .button_wrap { margin-top: 50px; text-align: center; }
@@ -40,13 +40,15 @@ tbody tr:hover { background-color: #A1887F; color: white; cursor: pointer; }
 footer { position: absolute; bottom: 0; left: 46%; padding-top: 60px; }
 
 @media screen and (max-width: 799px) {
-  .page_wrap { overflow-y: scroll; }
+  html {height: 100%; width: 100%; }
+  body { height: 100%; min-height: 100%;}
+  .page_wrap { position: fixed; overflow-y: scroll;}
   #heading { font-size: 40px; font-weight: bold; }
   .view_wrap, .intro_wrap, .country, .detail_wrap { width: 100%; }
   .map_wrap, .flag_wrap { width: 100%; display: inline-block; }
   .hide { display: none; }
   .long_entry { padding: 10px; }
-  footer { text-align: center; position: relative; }
+  footer { text-align: center; position: relative; left: 0; }
   
 }
 
