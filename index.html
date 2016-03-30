@@ -7,7 +7,7 @@
   <title>Countries &amp; Capitals</title>
   <link href='https://fonts.googleapis.com/css?family=Vollkorn' rel='stylesheet' type='text/css'>
   <style>
-body { font-family: "Arial", sans-serif; background: url(files/world_map_fotolia.jpg) no-repeat center center fixed; background-size: cover; color: #3E2723; font-family: 'Vollkorn', serif; text-align: center; min-height: 100%; margin: 0; z-index: 0; }
+body { font-family: "Arial", sans-serif; background: url(files/world_map_fotolia.jpg) no-repeat center center fixed; background-size: cover; color: #3E2723; font-family: 'Vollkorn', serif; text-align: center; min-height: 100%; margin: 0; top: 0; left: 0; right: 0; bottom: 0; z-index: -1; }
 header { border-bottom: 5px solid #3E2723; text-align: center; padding-bottom: 20px; padding-top: 10px; }
 #heading { font-size: 60px; font-weight: bold; }
 nav ul li { list-style-type: none; }
@@ -40,6 +40,7 @@ tbody tr:hover { background-color: #A1887F; color: white; cursor: pointer; }
 footer { position: static; bottom: 0; left: 46%; padding-top: 60px; }
 
 @media screen and (max-width: 799px) {
+  body { height: 100%; }
   #heading { font-size: 40px; font-weight: bold; }
   #flag { width: 40%; }
   .view_wrap, .intro_wrap, .country, .detail_wrap { width: 100%; }
