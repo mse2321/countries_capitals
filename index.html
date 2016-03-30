@@ -42,7 +42,6 @@ footer { position: absolute; bottom: 0; left: 46%; padding-top: 60px; }
 @media screen and (max-width: 799px) {
   html {height: 100%; width: 100%; }
   body { height: 100%; min-height: 100%;}
-  .page_wrap { position: fixed; overflow-y: scroll;}
   #heading { font-size: 40px; font-weight: bold; }
   .view_wrap, .intro_wrap, .country, .detail_wrap { width: 100%; }
   .map_wrap, .flag_wrap { width: 100%; display: inline-block; }
@@ -50,6 +49,12 @@ footer { position: absolute; bottom: 0; left: 46%; padding-top: 60px; }
   .long_entry { padding: 10px; }
   footer { text-align: center; position: relative; left: 0; }
   
+}
+
+@media screen and (max-height: 500px) {
+
+  .button_wrap { margin-bottom: 40px; }
+  footer { left: 42%; }
 }
 
   </style>
@@ -156,13 +161,8 @@ demo.controller('ctrl_detail', ['$scope', '$location', 'search', 'neighbors', fu
           $scope.codeResult = $scope.countryCode.split('/')[1];
 
         search($scope.codeResult).success(function(data) {
-              console.log(data);
               $scope.country_data = data['geonames'][0];
-              console.log('country_data:' + $scope.country_data);
-              console.log('codeResult:' + $scope.codeResult);
 
-              //console.log($scope.countryCode);
-              //console.log($scope.country_list);
             })
             .error(function(data) {
               console.log('Error!')
@@ -180,8 +180,6 @@ demo.controller('ctrl_detail', ['$scope', '$location', 'search', 'neighbors', fu
                   $scope.neighbours_list = data['geonames'];
               }
 
-              console.log('result: ' + $scope.resultNumber);
-              console.log('n-list: ' + $scope.neighbours_list);
             })
             .error(function(data) {
               console.log('Error!')
