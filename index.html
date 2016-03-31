@@ -184,6 +184,13 @@ demo.controller('ctrl_detail', ['$scope', '$location', 'search', 'neighbors', fu
               console.log('Error!')
         }); // end of neighbors function
 
+        $scope.imgCheck = function(){
+
+            $scope.country_map = 'http://www.geonames.org/img/country/250/{{ country_data.countryCode }}.png';
+            $scope.country_map = 'http://www.geonames.org/img/country/250/{{ country_data.countryCode }}.png';
+            
+        }
+
 }]); /// ctrl
   </script>
 </head>
@@ -269,7 +276,7 @@ demo.controller('ctrl_detail', ['$scope', '$location', 'search', 'neighbors', fu
 
               <div class="image_wrap">
                 <div class="country_wrap map_wrap">
-                  <img src="http://www.geonames.org/img/country/250/{{ country_data.countryCode }}.png" alt="" />
+                  <img ng-src="http://www.geonames.org/img/country/250/{{ country_data.countryCode }}.png" alt="" />
                 </div>
                 <div class="flag_wrap">
                   <img id='flag' src="http://www.geonames.org/flags/x/{{ country_data.countryCode | lowercase }}.gif" alt="" />
