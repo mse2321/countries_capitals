@@ -134,7 +134,7 @@ footer { position: fixed; bottom: 0; left: 0; background-color: #3E2723; color: 
                     <div class="info_headings">
                       <strong>3 neighbors:</strong>
                     </div>
-                    <div ng-repeat="item in neighbours_list">{{ item.name }}</div>
+                    <div ng-repeat="item in neighbours_list | limitTo: 3">{{ item.name }}</div>
                     <div ng-show="notApplicable">Not Applicable</div>
               </div>
 
