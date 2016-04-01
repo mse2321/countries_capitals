@@ -57,113 +57,10 @@ footer { position: fixed; bottom: 0; left: 0; background-color: #3E2723; color: 
 }
 
   </style>
-</head>
-<body>
-  <div class="page_wrap">
-    <div class="background_wrap"></div>
-    <div class="content_wrap">
-    <header>
-      <span id="heading">Countries &amp; Capitals</span>
-    </header>
-    <section>
-      <div ng-view class="view_wrap view-animation"></div>
-
-      <script type="text/ng-template" id="home.html">
-      <div class="intro_wrap">
-        <p class="intro">Welcome to the Countries &amp; Capitals App! Here you can learn more about each one and pull data from geonames.com. Click the button below to get started.</p>
-        <div class="button_wrap">
-          <a href="#/list"><button ng-click="list()">Browse Countries</button></a>
-        </div>
-      </div>
-      </script>
-      <script type="text/ng-template" id="countries.html">
-        <div class="country_wrap" ng-controller="ctrl">
-          <div class="country_data_wrap">
-            <div class="country">
-              <table ng-show="table">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Country Code</th>
-                    <th class="hide">Capital</th>
-                    <th class="hide">Area in km<sup>2</sup></th>
-                    <th class="hide">Population</th>
-                    <th class="hide">Continent</th>
-                  </tr>
-                </thead>
-                <div>{{ country_data.countryName }}</div>
-                <tbody>
-                  
-                    <tr ng-repeat="item in country_list" >
-                      <td><a href="#/{{ item.countryCode }}/capital">{{ item.countryName }}</a></td>
-                      <td>{{ item.countryCode }}</td>
-                      <td class="hide">{{ item.capital }}</td>
-                      <td class="hide">{{ item.areaInSqKm }}</td>
-                      <td class="hide">{{ item.population }}</td>
-                      <td class="hide">{{ item.continent }}</td>
-                    </tr>
-                </tbody>
-              </table>
-              <div class="button_wrap"><a href="#/home"><button>Home</button></a></div>
-            </div> <!-- end of country -->
-          </div> <!-- end of country_data_wrap -->
-        </div> <!-- end of country_wrap -->
-      </script>
-      <script type="text/ng-template" id="detail.html">
-        <div class="detail_wrap" >
-          <div class="data_wrap" >
-            <div class="info_wrap">
-            <h1>{{ country_data.countryName }}</h1>
-              <div class="intro_wrap_table">
-                    <div class="info_headings">
-                        <strong>Population of Country:</strong>
-                    </div>
-                    <div>{{ country_data.countryName }}</div>
-                    <div class="info_headings">
-                      <strong>Area:</strong> 
-                    </div>
-                    <div>{{ country_data.areaInSqKm }}km</div>
-                    <div class="info_headings">
-                      <strong>Capital:</strong>
-                    </div>
-                    <div>{{ country_data.capital }}</div>
-                    <div class="info_headings">
-                      <strong>Population of Capital:</strong>
-                    </div>
-                    <div>{{ country_data.population }}</div>
-                    <div class="info_headings">
-                      <strong>3 neighbors:</strong>
-                    </div>
-                    <div ng-repeat="item in neighbours_list">{{ item.name }}</div>
-                    <div ng-show="notApplicable">Not Applicable</div>
-              </div>
-
-              <div class="image_wrap">
-                <div class="country_wrap map_wrap">
-                  <img ng-src="http://www.geonames.org/img/country/250/{{ country_data.countryCode }}.png" alt="" />
-                </div>
-                <div class="flag_wrap">
-                  <img id='flag' src="http://www.geonames.org/flags/x/{{ country_data.countryCode | lowercase }}.gif" alt="" />
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="button_wrap">
-            <a href="#/home"><button>Home</button></a>
-            <a href="#/list"><button>Broswe Countries</button></a>
-          </div>
-        </div>
-      </script>
-    </section>
-    <footer>
-      <p>&copy;2016 ME Innovation</p>
-    </footer>
-    </div> <!-- end of page wrap -->
-  </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.js"></script>
-      <script>
+  <script async src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+  <script async src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
+  <script async src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-route.min.js"></script>
+  <script>
 var demo = angular.module('demo', ['ngRoute', 'ngAnimate'])
 demo.config(['$routeProvider', function($routeProvider){
             $routeProvider.when('/', {
@@ -296,5 +193,108 @@ demo.controller('ctrl_detail', ['$scope', '$location', 'search', 'neighbors', fu
 
 }]); /// ctrl
   </script>
+</head>
+<body>
+  <div class="page_wrap">
+    <div class="background_wrap"></div>
+    <div class="content_wrap">
+    <header>
+      <span id="heading">Countries &amp; Capitals</span>
+    </header>
+    <section>
+      <div ng-view class="view_wrap view-animation"></div>
+
+      <script type="text/ng-template" id="home.html">
+      <div class="intro_wrap">
+        <p class="intro">Welcome to the Countries &amp; Capitals App! Here you can learn more about each one and pull data from geonames.com. Click the button below to get started.</p>
+        <div class="button_wrap">
+          <a href="#/list"><button ng-click="list()">Browse Countries</button></a>
+        </div>
+      </div>
+      </script>
+      <script type="text/ng-template" id="countries.html">
+        <div class="country_wrap" ng-controller="ctrl">
+          <div class="country_data_wrap">
+            <div class="country">
+              <table ng-show="table">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Country Code</th>
+                    <th class="hide">Capital</th>
+                    <th class="hide">Area in km<sup>2</sup></th>
+                    <th class="hide">Population</th>
+                    <th class="hide">Continent</th>
+                  </tr>
+                </thead>
+                <div>{{ country_data.countryName }}</div>
+                <tbody>
+                  
+                    <tr ng-repeat="item in country_list" >
+                      <td><a href="#/{{ item.countryCode }}/capital">{{ item.countryName }}</a></td>
+                      <td>{{ item.countryCode }}</td>
+                      <td class="hide">{{ item.capital }}</td>
+                      <td class="hide">{{ item.areaInSqKm }}</td>
+                      <td class="hide">{{ item.population }}</td>
+                      <td class="hide">{{ item.continent }}</td>
+                    </tr>
+                </tbody>
+              </table>
+              <div class="button_wrap"><a href="#/home"><button>Home</button></a></div>
+            </div> <!-- end of country -->
+          </div> <!-- end of country_data_wrap -->
+        </div> <!-- end of country_wrap -->
+      </script>
+      <script type="text/ng-template" id="detail.html">
+        <div class="detail_wrap" >
+          <div class="data_wrap" >
+            <div class="info_wrap">
+            <h1>{{ country_data.countryName }}</h1>
+              <div class="intro_wrap_table">
+                    <div class="info_headings">
+                        <strong>Population of Country:</strong>
+                    </div>
+                    <div>{{ country_data.countryName }}</div>
+                    <div class="info_headings">
+                      <strong>Area:</strong> 
+                    </div>
+                    <div>{{ country_data.areaInSqKm }}km</div>
+                    <div class="info_headings">
+                      <strong>Capital:</strong>
+                    </div>
+                    <div>{{ country_data.capital }}</div>
+                    <div class="info_headings">
+                      <strong>Population of Capital:</strong>
+                    </div>
+                    <div>{{ country_data.population }}</div>
+                    <div class="info_headings">
+                      <strong>3 neighbors:</strong>
+                    </div>
+                    <div ng-repeat="item in neighbours_list">{{ item.name }}</div>
+                    <div ng-show="notApplicable">Not Applicable</div>
+              </div>
+
+              <div class="image_wrap">
+                <div class="country_wrap map_wrap">
+                  <img ng-src="http://www.geonames.org/img/country/250/{{ country_data.countryCode }}.png" alt="" />
+                </div>
+                <div class="flag_wrap">
+                  <img id='flag' src="http://www.geonames.org/flags/x/{{ country_data.countryCode | lowercase }}.gif" alt="" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="button_wrap">
+            <a href="#/home"><button>Home</button></a>
+            <a href="#/list"><button>Broswe Countries</button></a>
+          </div>
+        </div>
+      </script>
+    </section>
+    <footer>
+      <p>&copy;2016 ME Innovation</p>
+    </footer>
+    </div> <!-- end of page wrap -->
+  </div>
 </body>
 </html>
