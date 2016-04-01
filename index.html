@@ -56,6 +56,19 @@ footer { position: fixed; bottom: 0; left: 0; background-color: #3E2723; color: 
 }
 
   </style>
+  <script type="text/javascript">
+    WebFontConfig = {
+      google: { families: [ 'Vollkorn::latin' ] }
+    };
+    (function() {
+      var wf = document.createElement('script');
+      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+      wf.type = 'text/javascript';
+      wf.async = 'true';
+      var s = document.getElementsByTagName('script')[0];
+      s.parentNode.insertBefore(wf, s);
+    })(); 
+  </script>
 </head>
 <body>
   <div class="page_wrap">
@@ -159,19 +172,6 @@ footer { position: fixed; bottom: 0; left: 0; background-color: #3E2723; color: 
     </footer>
     </div> <!-- end of page wrap -->
   </div>
-  <script type="text/javascript">
-    WebFontConfig = {
-      google: { families: [ 'Vollkorn::latin' ] }
-    };
-    (function() {
-      var wf = document.createElement('script');
-      wf.src = 'https://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-      wf.type = 'text/javascript';
-      wf.async = 'true';
-      var s = document.getElementsByTagName('script')[0];
-      s.parentNode.insertBefore(wf, s);
-    })(); 
-  </script>
   <script src="files/angular.min.js"></script>
   <script src="files/angular-animate.min.js"></script>
   <script src="files/angular-route.min.js"></script>
