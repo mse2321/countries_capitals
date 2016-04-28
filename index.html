@@ -266,7 +266,7 @@ demo.controller('ctrl', ['$scope', 'list', '$timeout', '$q', function($scope, li
         };
 
         list().success(function(data) {
-
+              
               $scope.country_list = data['geonames'];
 
               return showTable();
