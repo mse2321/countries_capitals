@@ -28,6 +28,7 @@ nav ul li { list-style-type: none; }
 .content_wrap { font-family: 'Montserrat', sans-serif; text-align: center; }
 .view_wrap { margin: 0 auto; width: 800px; z-index: 1000; }
 .intro_wrap { width: 400px; margin: 0 auto; padding-top: 50px; }
+.intro_wrap_table { text-align: left; }
 .intro { margin: 50px 20px; }
 .button_wrap { text-align: center; margin-top: 20px; margin-bottom: 40px; }
 .country_wrap { padding-top: 20px; }
@@ -36,6 +37,8 @@ nav ul li { list-style-type: none; }
 #flag { width: 70%; }
 .image_wrap { width: 100%; }
 .info_headings { margin-top: 10px; font-weight: bold; font-size: 20px; }
+.info_data, .info_headings { display: inline-block; }
+.info_data { margin-left: 30px; }
 .map_wrap, .flag_wrap { width: 40%; display: inline-block; }
 .view-animation.ng-enter,.animate-view.ng-leave { transition:1s linear all; }
 .view-animation.ng-enter { opacity: 0; }
@@ -43,7 +46,7 @@ nav ul li { list-style-type: none; }
 .view-animation.ng-leave { opacity: 1; }
 .view-animation.ng-leave.ng-leave-active { opacity: 0; }
 table { width: 100%; border-collapse: collapse; }
-.country th { width: 5%; }
+.country th { width: 10%; }
 h1 { font-size: 40px; margin-bottom: 0; margin-top: 20px; }
 a { color: #90A4AE; text-decoration: none; font-weight: bold; }
 button { background-color: #A1887F; color: #3E2723; padding: 10px; border: none; font-weight: bold; font-family: 'Montserrat', sans-serif; cursor: pointer; }
@@ -60,7 +63,7 @@ footer { position: fixed; bottom: 0; left: 0; background-color: #3E2723; color: 
   .map_wrap, .flag_wrap { width: 100%; display: inline-block; }
   .hide { display: none; }
   .long_entry { padding: 10px; }
-  footer { text-align: center;  }
+  footer, .intro_wrap_table { text-align: center;  }
   
 }
 
@@ -130,24 +133,24 @@ footer { position: fixed; bottom: 0; left: 0; background-color: #3E2723; color: 
                     <div class="info_headings">
                         <strong>Population of Country:</strong>
                     </div>
-                    <div>{{ country_data.countryName }}</div>
+                    <div class="info_data">{{ country_data.countryName }}</div><br />
                     <div class="info_headings">
                       <strong>Area:</strong> 
                     </div>
-                    <div>{{ country_data.areaInSqKm }}km</div>
+                    <div class="info_data">{{ country_data.areaInSqKm }}km</div><br />
                     <div class="info_headings">
                       <strong>Capital:</strong>
                     </div>
-                    <div>{{ country_data.capital }}</div>
+                    <div class="info_data">{{ country_data.capital }}</div><br />
                     <div class="info_headings">
                       <strong>Population of Capital:</strong>
                     </div>
-                    <div>{{ country_data.population }}</div>
+                    <div class="info_data">{{ country_data.population }}</div><br />
                     <div class="info_headings">
                       <strong>3 neighbors:</strong>
                     </div>
-                    <div ng-repeat="item in neighbours_list | limitTo: 3">{{ item.name }}</div>
-                    <div ng-show="notApplicable">Not Applicable</div>
+                    <div class="info_data" ng-repeat="item in neighbours_list | limitTo: 3">{{ item.name }}</div>
+                    <div class="info_data" ng-show="notApplicable">Not Applicable</div>
               </div>
 
               <div class="image_wrap">
