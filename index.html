@@ -61,14 +61,16 @@ footer { position: fixed; bottom: 0; left: 0; background-color: #3E2723; color: 
   #flag { width: 40%; }
   .view_wrap, .intro_wrap, .country, .detail_wrap { width: 100%; }
   .map_wrap, .flag_wrap { width: 100%; display: inline-block; }
-  .hide { display: none; }
+  .hide, br { display: none; }
   .long_entry { padding: 10px; }
+  .info_data { margin-left: 0; }
+  .info_data, .info_headings { display: block; }
   footer, .intro_wrap_table { text-align: center;  }
   
 }
 
 @media screen and (max-height: 600px) {
-  footer { display: none; }
+  footer, br { display: none; }
 }
 
   </style>
