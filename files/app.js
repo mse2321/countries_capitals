@@ -1,4 +1,5 @@
 var demo = angular.module('demo', ['ngRoute', 'ngAnimate'])
+    urlPath = 'http://api.geonames.org/countryInfoJSON?&username=mse2335';
 
 demo.config(['$routeProvider', function($routeProvider){
   $routeProvider.when('/', {
@@ -27,7 +28,7 @@ demo.factory('list', function($http){
     return $http ({ 
       cache: true,
       method: 'JSONP', 
-      url: 'http://api.geonames.org/countryInfoJSON?username=mse2335',
+      url: urlPath,
       params: {callback: 'JSON_CALLBACK'}
     })
   };
@@ -37,7 +38,7 @@ demo.factory('search', function($http){
   return function(countryCode){
     return $http ({ 
       method: 'JSONP', 
-      url: 'http://api.geonames.org/countryInfoJSON?&username=mse2335',
+      url: urlPath,
       params: {
         callback: 'JSON_CALLBACK', 
         country: countryCode,
@@ -59,7 +60,6 @@ demo.factory('neighbors', function($http){
 
 demo.controller('ctrl', ['$scope', 'list', '$timeout', '$q', function($scope, list, $timeout, $q){
   $scope.country_list = [];
-  $scope.url = 'http://api.geonames.org/countryInfoJSON?&username=mse2335';
 
   function hold() {
     $scope.waiting = true;
