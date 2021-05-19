@@ -12,66 +12,41 @@ const StateProvider = ({ children }) => {
     const [country, setCountry] = useState({});
     const [countryList, setCountryList] = useState([]);
     const [countryNeighbors, setCountryNeighbors] = useState([]);
-    const [token, setToken] = useState('');
 
-    const getAuth = async () => {
-        const auth = 'Basic ' + secrets.spotify.secret;
-
-        const headers = { 
-            'Access-Control-Allow-Origin': '*',
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': auth,
-            'withCredentials': true
-        };
-
-        const url = "https://accounts.spotify.com/api/token";
-        const body = 'grant_type=client_credentials';
-
-        try {
-            const response = await axios.post(url, body, { headers });
-            setToken(response.data.access_token);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const getCountryList = async (artistName) => {
-        const url = "https://api.discogs.com/database/search?";
-        const params = 'q=' + artistName + '&type=artist&token=' + secrets.discogs.token;
+    const getCountryList = async () => {
+        const url = "http://api.geonames.org/countryInfoJSON?formatted=true&lang=en";
+        const params = '&username=' + secrets.geonames.username;
         const endPoint = url + params;
 
         try {
             const response = await axios.get(endPoint);
-            const artistId = response?.data.results[0].id;
-            getArtistDetails(artistId.toString());
+            setCountryList(response.data.geonames);
         } catch (error) {
             console.error(error);
         }
     }
 
-    const getCountry = async (artistName) => {
-      const url = "https://api.discogs.com/database/search?";
-      const params = 'q=' + artistName + '&type=artist&token=' + secrets.discogs.token;
+    const getCountry = async (countryCode) => {
+      const url = "http://api.geonames.org/countryInfoJSON?formatted=true&lang=en";
+      const params = '&' + countryCode + '&username=' + secrets.geonames.username;
       const endPoint = url + params;
 
       try {
           const response = await axios.get(endPoint);
-          const artistId = response?.data.results[0].id;
-          getArtistDetails(artistId.toString());
+          setCountry(response.data.geonames);
       } catch (error) {
           console.error(error);
       }
     }
 
-    const getCountryNeighbors = async (artistName) => {
-      const url = "https://api.discogs.com/database/search?";
-      const params = 'q=' + artistName + '&type=artist&token=' + secrets.discogs.token;
+    const getCountryNeighbors = async (countryCode) => {
+      const url = "http://api.geonames.org/neighboursJSON?formatted=true&lang=en&country=";
+      const params = countryCode + '&username=' + secrets.geonames.username;
       const endPoint = url + params;
 
       try {
           const response = await axios.get(endPoint);
-          const artistId = response?.data.results[0].id;
-          getArtistDetails(artistId.toString());
+          setCountryNeighbors(response.data.geonames);
       } catch (error) {
           console.error(error);
       }
@@ -84,7 +59,6 @@ const StateProvider = ({ children }) => {
         getCountryList,
         getCountry,
         getCountryNeighbors,
-        setCountryNeighbors,
         setCountry
     };
 

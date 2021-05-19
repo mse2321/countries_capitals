@@ -3,7 +3,7 @@ const Header = () => {
 
   return (
     <header>
-        <span id="heading">Countries &amp; Capitals</span>
+        <h1 id="heading">Countries &amp; Capitals</h1>
     </header>
   );
 }
