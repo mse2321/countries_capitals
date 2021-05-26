@@ -5,7 +5,6 @@ const CountryList = (props) => {
   const {
       toggleProfile,
       toggleList,
-      toggleHome
   } = props;
 
   const { countryList, getCountryNeighbors, setCountry } = useStateContext();
@@ -15,11 +14,6 @@ const CountryList = (props) => {
     getCountryNeighbors(countryCode);
     toggleList(false);
     toggleProfile(true);
-  }
-
-  const backToHome = () => {
-    toggleList(false);
-    toggleHome(true);
   }
 
     return (
