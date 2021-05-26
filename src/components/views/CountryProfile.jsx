@@ -1,74 +1,49 @@
 import { useStateContext } from '../../context/state';
-import { Button } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
-const CountryProfile = (props) => {
-    const {
-        toggleProfile,
-        toggleList,
-        toggleHome
-    } = props;
-  
+const CountryProfile = () => {
     const { 
         country,
         countryNeighbors 
     } = useStateContext();
 
-    const backToList = () => {
-        toggleProfile(false);
-        toggleList(true);
-    }
-
-    const backToHome = () => {
-        toggleProfile(false);
-        toggleHome(true)
-    }
+    console.log(countryNeighbors);
 
     return (
-        <div className="detail_wrap" >
-            <div className="button_wrap">
-                <Button onClick={() => backToHome()}>Home</Button>
-                <Button onClick={() => backToList()}>Browse Countries</Button>
-            </div>
-            <div className="data_wrap" >
-                <div className="info_wrap">
-                    <h1>{country.countryName}</h1>
-                    <div className="intro_wrap_table">
-                        <div className="info_headings">
-                            <strong>Population of Country:</strong>
-                        </div>
-                        <div className="info_data">{country.countryName}</div><br />
-                        <div className="info_headings">
-                            <strong>Area:</strong> 
-                        </div>
-                        <div className="info_data">{country.areaInSqKm + 'km'}</div><br />
-                        <div className="info_headings">
-                            <strong>Capital:</strong>
-                        </div>
-                        <div className="info_data">{ country.capital }</div><br />
-                        <div className="info_headings">
-                            <strong>Population of Capital:</strong>
-                        </div>
-                        <div className="info_data">{ country.population }</div><br />
-                        <div className="info_headings">
-                            <strong>3 neighbors:</strong>
-                        </div>
-                        {
-                            countryNeighbors ? countryNeighbors.map((neighbour) => {
-                                return <div className="info_data">{ neighbour.countryName }</div>
-                            }) : <div className="info_data">Not Applicable</div>
-                        }
-                    </div>
-                    {/* 
-                        <div className="image_wrap">
-                            <div className="country_wrap map_wrap">
-                                <img src={'http://www.geonames.org/img/country/250/' + country.countryCode + '.png'} alt="" />
-                            </div>
+        <div className="profile_wrap" >
+            <div className="data_wrap">
+                <Card className="info_wrap" text="secondary">
+                    <Card.Header>
+                        <div className="country_name_container">
                             <div className="flag_wrap">
-                                <img id="flag" src={'http://www.geonames.org/flags/x/' + country.countryCode + '.gif'} alt="" />
+                                <img id="flag" 
+                                    src={'https://www.countryflags.io/' + country.countryCode + '/flat/64.png'} 
+                                    alt={country.countryName + ' flag'} />
                             </div>
+                            <h2>{country.countryName}</h2>
                         </div>
-                    */}
-                </div>
+                    </Card.Header>
+                    <Card.Body>
+                        <div className="intro_wrap_table">
+                            <Card.Title className="info_headings">Population of Country:</Card.Title>
+                            <Card.Text className="info_data">{country.population}</Card.Text>
+                            <Card.Title className="info_headings">Area:</Card.Title>
+                            <Card.Text className="info_data">{country.areaInSqKm + 'km'}</Card.Text>
+                            <Card.Title className="info_headings">Capital:</Card.Title>
+                            <Card.Text className="info_data">{ country.capital }</Card.Text>
+                            <Card.Title className="info_headings">Languages:</Card.Title>
+                            <Card.Text className="info_data">{ country.languages }</Card.Text>
+                            <Card.Title className="info_headings">{'Neighbours: ' + countryNeighbors.length}</Card.Title>
+                            <Card.Text className="info_data">
+                                {
+                                    countryNeighbors ? countryNeighbors.map((neighbour) => {
+                                        return <div className="info_data">{ neighbour.countryName }</div>
+                                    }) : <div className="info_data">Not Applicable</div>
+                                }
+                            </Card.Text>
+                        </div>
+                    </Card.Body>
+                </Card>
             </div>
         </div>
     )

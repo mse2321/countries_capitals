@@ -1,0 +1,16 @@
+.profile_wrap {
+    .country_name_container { display: flex; }
+       
+    h2 {
+        margin: auto;
+        display: inline-flex;
+    }
+
+    .flag_wrap              { display: inline-flex; }
+
+    h2, .card-title         { font-weight: 600; }
+
+    .intro_wrap_table {
+        p { font-size: $base-font-unit * 1; }
+    }
+}

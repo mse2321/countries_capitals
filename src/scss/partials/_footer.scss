@@ -1,6 +1,8 @@
 footer { 
-	margin-top: 100px; 
 	color: #546E7A; 
-	padding-bottom: 10px; 
 	font-size: $base-unit * 1.1;
+	position: absolute;
+	bottom: $base-unit;
+
+	a { margin-left: $base-unit * 0.3; }
 }

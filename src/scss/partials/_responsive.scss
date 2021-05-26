@@ -1,0 +1,24 @@
+@media (max-width: 800px) {
+    h1 { 
+        font-size: $base-font-unit * 2.3; 
+        margin-bottom: $base-unit;
+    }
+
+    #content_wrap { 
+        padding: 0; 
+        width: 90%; 
+        margin: auto;
+    } 
+
+    .row footer {
+        position: relative;
+        margin-top: $base-unit * 2;
+        padding-bottom: $base-unit * 0.2;
+    }
+
+    .row > *                { width: 100%; }
+
+    .countries_data_wrap    { overflow: scroll; }
+
+    .nav_container          { padding-left: 0; }
+}

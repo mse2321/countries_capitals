@@ -8,7 +8,13 @@ const Footer = () => {
         <footer>
             <small>
                 &copy;{year} 
-                <a href="http://www.meinnovation.net" target="_blank" rel="noopener noreferrer">{copyrightName}</a>
+                <a 
+                    href="http://www.meinnovation.net" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    className="text-info">
+                        {copyrightName}
+                </a>
             </small>
         </footer>
     );

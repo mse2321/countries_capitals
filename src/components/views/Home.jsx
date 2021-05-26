@@ -17,9 +17,10 @@ const Home = (props) => {
 
     return (
         <section className="intro_wrap">
-            <p className="intro">Welcome to the Countries &amp; Capitals App! Here you can learn more about each one and pull data from geonames.com. Click the button below to get started.</p>
+            <p className="intro">Welcome to the Countries &amp; Capitals App!</p> 
+            <p>Here you can learn more about each one and pull data from geonames.com.</p>
             <div className="button_wrap">
-                <Button onClick={() => showCountryList()}>Browse Countries</Button>
+                <Button onClick={() => showCountryList()} variant='info'>Browse Countries</Button>
             </div>
         </section>
     );

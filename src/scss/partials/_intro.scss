@@ -1,3 +1,7 @@
 .intro_wrap {
     font-size: $base-unit * 1.2;
+
+    .button_wrap    { margin: $base-unit * 3 0; }
+
+    .intro          { margin-bottom: 0; }
 }

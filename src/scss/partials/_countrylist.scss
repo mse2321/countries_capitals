@@ -1,0 +1,22 @@
+.countries {
+    .btn { width: 100%; }
+
+    th { 
+        font-size: $base-unit; 
+        padding-left: $base-unit;
+        color: white;
+        background-color: #09194f;
+    }
+
+    .number_heading { 
+        padding-left: 0;
+        padding-right: $base-unit;
+    }
+
+    td { 
+        padding: $base-unit * 1; 
+        font-size: $base-unit;
+    }
+
+    .number_heading, .number { text-align: right; }
+}

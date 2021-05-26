@@ -9,7 +9,7 @@ const App = () => {
     <Container fluid>
       <Row id="content_wrap">
         <StateProvider>
-          <Col xs={12} xl={7}>
+          <Col xs={12} xl={10}>
             <Header />
             <Views />
           </Col>
